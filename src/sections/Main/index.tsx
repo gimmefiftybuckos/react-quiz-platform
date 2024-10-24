@@ -1,6 +1,9 @@
 import { Box } from '@mui/material';
 import { AsideBar } from '../AsideBar';
-import { MainSection } from '../MainSection';
+import { QuizSection } from '../QuizSection';
+import { Route, Routes } from 'react-router-dom';
+import { CreateSection } from '../CreateSection';
+import { CatalogSection } from '../CatalogSection';
 
 export const Main = () => {
    return (
@@ -10,12 +13,19 @@ export const Main = () => {
             display: 'flex',
             margin: '0 auto',
             paddingInline: '2rem',
-            maxInlineSize: '80rem',
+            maxInlineSize: '85rem',
             blockSize: 'calc(100vh - 70px)',
          }}
       >
          <AsideBar />
-         <MainSection />
+         <Routes>
+            <Route path='/' element={<CreateSection />} />
+            <Route path='/quiz/:id' element={<QuizSection />} />
+            <Route path='/create' element={<CreateSection />} />
+
+            {/* <Route path="*" element={<NotFound />} /> */}
+         </Routes>
+         {/* <QuizSection /> */}
       </Box>
    );
 };

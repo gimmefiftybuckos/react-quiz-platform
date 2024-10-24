@@ -10,8 +10,10 @@ export const AsideBar = () => {
             display: 'flex',
             alignItems: 'center',
             maxInlineSize: '25vw',
+            minInlineSize: 260,
             blockSize: '100%',
             inlineSize: '100%',
+            paddingInline: 2,
             borderInline: '1px solid lightGray',
             background: '#fff',
          }}
@@ -22,8 +24,9 @@ export const AsideBar = () => {
                display: 'flex',
                flexDirection: 'column',
                margin: '0 auto',
-               padding: 5,
+               padding: 4.5,
                maxInlineSize: '18vw',
+               minInlineSize: 220,
                borderRadius: 2,
                border: '1px solid lightGray',
             }}

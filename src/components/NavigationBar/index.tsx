@@ -1,6 +1,9 @@
 import { Box, Button } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
 
 export const NavigationBar = () => {
+   const navigate = useNavigate();
+
    return (
       <Box
          component='nav'
@@ -10,12 +13,16 @@ export const NavigationBar = () => {
             alignItems: 'center',
             paddingInline: '2rem',
             margin: '0 auto',
-            maxInlineSize: '80rem',
+            maxInlineSize: '85rem',
             height: '100%',
          }}
       >
-         <Button variant='outlined'>Все тесты</Button>
-         <Button variant='contained'>Создать тест</Button>
+         <Button onClick={() => navigate('/')} variant='outlined'>
+            Все тесты
+         </Button>
+         <Button onClick={() => navigate('/create')} variant='contained'>
+            Создать тест
+         </Button>
       </Box>
    );
 };

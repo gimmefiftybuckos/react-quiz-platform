@@ -1,6 +1,6 @@
 import { Box } from '@mui/material';
 
-export const MainSection = () => {
+export const CreateSection = () => {
    return (
       <Box
          component='section'
@@ -11,7 +11,7 @@ export const MainSection = () => {
             borderInlineEnd: '1px solid lightGray',
          }}
       >
-         Test
+         Test Create
       </Box>
    );
 };
