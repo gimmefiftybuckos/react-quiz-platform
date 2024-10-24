@@ -38,8 +38,8 @@ export const AsideBar = () => {
                container
                spacing={1}
             >
-               {new Array(25).fill(0).map(() => (
-                  <Grid item sx={{ padding: 0 }}>
+               {new Array(25).fill(0).map((_, index) => (
+                  <Grid key={index} item sx={{ padding: 0 }}>
                      <IconButton
                         sx={{
                            blockSize: 40,

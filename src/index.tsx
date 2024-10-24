@@ -8,6 +8,7 @@ import { CreateSection } from './sections/CreateSection/index.tsx';
 import { QuizSection } from './sections/QuizSection/index.tsx';
 
 import './styles/index.css';
+import store from './store/index.ts';
 
 const router = createBrowserRouter([
    {
@@ -31,7 +32,7 @@ const router = createBrowserRouter([
 ]);
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
-   // <Provider store={store}>
-   <RouterProvider router={router} />
-   // </Provider>
+   <Provider store={store}>
+      <RouterProvider router={router} />
+   </Provider>
 );

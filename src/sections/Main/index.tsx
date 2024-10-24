@@ -3,7 +3,7 @@ import { AsideBar } from '../AsideBar';
 import { QuizSection } from '../QuizSection';
 import { Route, Routes } from 'react-router-dom';
 import { CreateSection } from '../CreateSection';
-import { CatalogSection } from '../CatalogSection';
+import { HomeSection } from '../HomeSection';
 
 export const Main = () => {
    return (
@@ -19,7 +19,7 @@ export const Main = () => {
       >
          <AsideBar />
          <Routes>
-            <Route path='/' element={<CreateSection />} />
+            <Route path='/' element={<HomeSection />} />
             <Route path='/quiz/:id' element={<QuizSection />} />
             <Route path='/create' element={<CreateSection />} />
 
