@@ -11,7 +11,7 @@ export const CatalogSection = () => {
             borderInlineEnd: '1px solid lightGray',
          }}
       >
-         Test Catalog
+         <Box component='ul'></Box>
       </Box>
    );
 };

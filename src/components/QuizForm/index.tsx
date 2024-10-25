@@ -21,8 +21,6 @@ export const QuizForm = () => {
                display: 'flex',
                gap: 1,
                marginBlockStart: 1,
-               maxBlockSize: '60vh',
-               overflow: 'auto',
             }}
          >
             <FormLabel

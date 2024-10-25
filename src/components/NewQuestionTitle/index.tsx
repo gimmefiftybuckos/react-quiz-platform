@@ -1,13 +1,13 @@
 import { Box, TextField } from '@mui/material';
 import { useDispatch, useSelector } from '../../store';
-import { setQuestion } from '../../store/slices/quize';
+import { setProblem } from '../../store/slices/quize';
 
 export const NewQuestionTitle = () => {
-   const { newQuestion } = useSelector((state) => state.quizes);
+   const { question } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
 
    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(setQuestion(event.target.value));
+      dispatch(setProblem(event.target.value));
    };
 
    return (
@@ -20,14 +20,13 @@ export const NewQuestionTitle = () => {
       >
          <TextField
             id='outlined-textarea'
-            label='Вопрос'
             placeholder='Напишите вопрос'
             multiline
-            value={newQuestion.question}
+            value={question.problem}
             onChange={onChange}
             sx={{
                inlineSize: '100%',
-               maxBlockSize: '30vh',
+               maxBlockSize: 'calc(55vh - 70px)',
                overflow: 'auto',
             }}
          />

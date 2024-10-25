@@ -7,9 +7,10 @@ import {
 } from '@mui/material';
 import { useDispatch, useSelector } from '../../store';
 import { setType } from '../../store/slices/quize';
+import { QuestionTypes } from '../../services/types';
 
 export const NewQuestionType = () => {
-   const { newQuestion } = useSelector((state) => state.quizes);
+   const { question } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
 
    const handleTypeChange = (event: SelectChangeEvent<string>) => {
@@ -22,15 +23,21 @@ export const NewQuestionType = () => {
          <Select
             labelId='question-type-label'
             id='question-type'
-            value={newQuestion.type}
+            value={question.type}
             label='Тип вопроса'
             onChange={handleTypeChange}
          >
             <MenuItem value=''>None</MenuItem>
-            <MenuItem value='radio'>Выбор одного варианта</MenuItem>
-            <MenuItem value='checkbox'>Выбор нескольких вариантов</MenuItem>
-            <MenuItem value='input'>Короткий ответ</MenuItem>
-            <MenuItem value='textfield'>Развернутый ответ</MenuItem>
+            <MenuItem value={QuestionTypes.RADIO}>
+               Выбор одного варианта
+            </MenuItem>
+            <MenuItem value={QuestionTypes.CHECKBOX}>
+               Выбор нескольких вариантов
+            </MenuItem>
+            <MenuItem value={QuestionTypes.INPUT}>Короткий ответ</MenuItem>
+            <MenuItem value={QuestionTypes.TEXTFIELD}>
+               Развернутый ответ
+            </MenuItem>
          </Select>
       </FormControl>
    );

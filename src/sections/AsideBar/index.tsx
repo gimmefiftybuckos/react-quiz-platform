@@ -1,8 +1,23 @@
 import { Box, Button, Grid, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
+import { useDispatch, useSelector } from '../../store';
+import { setQuestion } from '../../store/slices/quize';
+import { validateQuestion } from '../../services/utils';
+import { useLocation } from 'react-router-dom';
+import { RoutesCatalog } from '../../services/types';
 
 export const AsideBar = () => {
+   const { quiz } = useSelector((state) => state.quizes);
+   const dispatch = useDispatch();
+   const { pathname } = useLocation();
+
+   const onClick = (id: string) => {
+      dispatch(setQuestion(id));
+   };
+
+   const inCreate = pathname === RoutesCatalog.CREATE;
+
    return (
       <Box
          component='aside'
@@ -38,8 +53,8 @@ export const AsideBar = () => {
                container
                spacing={1}
             >
-               {new Array(25).fill(0).map((_, index) => (
-                  <Grid key={index} item sx={{ padding: 0 }}>
+               {quiz.questions.map((item) => (
+                  <Grid key={item.id} item sx={{ padding: 0 }}>
                      <IconButton
                         sx={{
                            blockSize: 40,
@@ -48,9 +63,14 @@ export const AsideBar = () => {
                            border: '1px solid lightGray',
                            padding: 0.5,
                         }}
+                        onClick={() => onClick(item.id)}
                      >
-                        {/* <CheckIcon /> */}
-                        {/* <ClearIcon /> */}
+                        {inCreate &&
+                           (validateQuestion(item) ? (
+                              <CheckIcon color='success' />
+                           ) : (
+                              <ClearIcon color='error' />
+                           ))}
                      </IconButton>
                   </Grid>
                ))}
