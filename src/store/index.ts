@@ -6,7 +6,7 @@ import {
    useSelector as selectorHook,
 } from 'react-redux';
 
-import quizeReducer from './slices/quize';
+import quizeReducer from './slices/quizes';
 
 const store = configureStore({
    reducer: {

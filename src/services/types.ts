@@ -1,9 +1,9 @@
 export interface IQuestion {
-   id: string;
+   id: number;
    answers: string[];
-   rightAnswers: number[];
+   rightAnswers: number[] | string[];
    problem: string;
-   type: string;
+   type: QuestionTypes;
    time?: number;
    valid?: boolean;
 }
@@ -20,6 +20,7 @@ export enum RoutesCatalog {
 }
 
 export enum QuestionTypes {
+   NONE = '',
    CHECKBOX = 'checkbox',
    RADIO = 'radio',
    INPUT = 'input',

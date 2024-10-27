@@ -1,76 +1,76 @@
-import {
-   Box,
-   Button,
-   Checkbox,
-   FormControl,
-   FormControlLabel,
-   FormLabel,
-   Typography,
-} from '@mui/material';
+import { Box, Button, Typography } from '@mui/material';
+import QuestionControl from '../QuestionControl';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from '../../store';
+import { useLocation, useSearchParams } from 'react-router-dom';
+import { setQuestion, setQuiz } from '../../store/slices/quizes';
 
 export const QuizForm = () => {
+   const dispatch = useDispatch();
+   const { pathname } = useLocation();
+   const [params, setParams] = useSearchParams();
+   const { quiz, question } = useSelector((state) => state.quizes);
+   const [questionIndex, setQuestionIndex] = useState(0);
+   const [selectedAnswers, setSelectedAnswers] = useState<number[] | string[]>(
+      []
+   );
+
+   const quizId = pathname.split('/')[2];
+   const questionIndexParam = params.get('question');
+
+   useEffect(() => {
+      if (questionIndexParam) {
+         setQuestionIndex(+questionIndexParam);
+      }
+      dispatch(setQuiz(quizId));
+   }, []);
+
+   useEffect(() => {
+      dispatch(setQuestion(questionIndex));
+   }, [questionIndex]);
+
+   useEffect(() => {
+      setParams({ question: question.id.toString() });
+   }, [question]);
+
+   const handleControlChange = (answers: number[] | string[]) => {
+      setSelectedAnswers(answers);
+   };
+
+   const onSubmit = (event: React.FormEvent) => {
+      event.preventDefault();
+
+      setQuestionIndex((prev) => prev + 1);
+   };
+
+   useEffect(() => {
+      console.log(selectedAnswers);
+   }, [selectedAnswers]);
+
    return (
-      <form
-         onSubmit={() => {
-            console.log('test');
-         }}
-      >
-         <FormControl
-            component='fieldset'
-            sx={{
-               display: 'flex',
-               gap: 1,
-               marginBlockStart: 1,
-            }}
-         >
-            <FormLabel
-               sx={{
-                  marginBlock: 2,
-                  color: 'text.primary',
-                  '&.Mui-focused': {
-                     color: 'text.primary',
-                  },
-               }}
-               component='legend'
+      <Box component='div'>
+         <Typography variant='h5' component='h1'>
+            {quiz.id}
+         </Typography>
+         <Typography variant='h6' component='h2' sx={{ marginBlockStart: 3 }}>
+            Вопрос № {question.id + 1}
+         </Typography>
+         <Typography sx={{ marginBlockStart: 1 }}>
+            {question.problem}
+         </Typography>
+         <form onSubmit={onSubmit}>
+            <QuestionControl
+               type={question.type}
+               onChange={handleControlChange}
+            />
+            <Button
+               variant='outlined'
+               type='submit'
+               sx={{ marginBlockStart: 3 }}
             >
-               Выберите вариант ответа
-            </FormLabel>
-            {new Array(7).fill(0).map((_, index) => (
-               <FormControlLabel
-                  key={index}
-                  sx={{
-                     display: 'flex',
-                     gap: 1,
-                     alignItems: 'start',
-                     margin: 0,
-                  }}
-                  control={
-                     <Checkbox
-                        sx={{ padding: 0 }}
-                        value={`option${index + 1}`}
-                     />
-                  }
-                  label={
-                     <Box sx={{ display: 'flex', gap: 1 }}>
-                        <Typography component='p'>
-                           {String.fromCharCode(97 + index)}.
-                        </Typography>
-                        <Typography component='p'>
-                           Lorem ipsum dolor sit amet consectetur adipisicing
-                           elit. In voluptatibus fuga soluta quis, sunt iure!
-                           Lorem ipsum dolor sit amet consectetur adipisicing
-                           elit. In voluptatibus fuga soluta quis, sunt iure!
-                           Lorem ipsum dolor sit amet consectetur adipisicing
-                           elit. In voluptatibus fuga soluta quis, sunt iure!
-                        </Typography>
-                     </Box>
-                  }
-               />
-            ))}
-         </FormControl>
-         <Button variant='outlined' type='submit' sx={{ marginBlockStart: 3 }}>
-            Следующий
-         </Button>
-      </form>
+               Ответить
+            </Button>
+         </form>
+      </Box>
    );
 };

@@ -9,14 +9,14 @@ import {
    resetQuiz,
    setAnswers,
    setValid,
-} from '../../store/slices/quize';
+} from '../../store/slices/quizes';
 import { useDispatch, useSelector } from '../../store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { validateQuestion, validateQuiz } from '../../services/utils';
 
 export const NewQuestionForm = () => {
-   const { question, quiz } = useSelector((state) => state.quizes);
+   const { question, quiz, quizes } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
@@ -31,6 +31,7 @@ export const NewQuestionForm = () => {
          dispatch(addQuize());
          navigate('/');
          dispatch(resetQuiz());
+         dispatch(resetQuestion());
       } else {
          console.error('Не все вопросы составлены правильно');
       }
@@ -41,10 +42,7 @@ export const NewQuestionForm = () => {
    };
 
    useEffect(() => {
-      dispatch(setValid(validateQuestion(question)));
       dispatch(addQuestion());
-      console.log(question);
-      console.log(quiz);
    }, [question]);
 
    return (

@@ -1,6 +1,6 @@
 import { Box, TextField } from '@mui/material';
 import { useDispatch, useSelector } from '../../store';
-import { setProblem } from '../../store/slices/quize';
+import { setProblem } from '../../store/slices/quizes';
 
 export const NewQuestionTitle = () => {
    const { question } = useSelector((state) => state.quizes);

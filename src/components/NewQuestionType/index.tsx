@@ -6,7 +6,7 @@ import {
    SelectChangeEvent,
 } from '@mui/material';
 import { useDispatch, useSelector } from '../../store';
-import { setType } from '../../store/slices/quize';
+import { setType } from '../../store/slices/quizes';
 import { QuestionTypes } from '../../services/types';
 
 export const NewQuestionType = () => {

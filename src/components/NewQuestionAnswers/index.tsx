@@ -4,7 +4,7 @@ import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 
 import { useDispatch, useSelector } from '../../store';
-import { setAnswers, setRightAnswer } from '../../store/slices/quize';
+import { setAnswers, setRightAnswer } from '../../store/slices/quizes';
 
 export const NewQuestionAnswers = () => {
    const { question } = useSelector((state) => state.quizes);
