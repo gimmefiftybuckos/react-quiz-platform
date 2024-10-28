@@ -14,19 +14,14 @@ export const validateQuiz = (quiz: IQuize): boolean => {
    return quiz.questions.every((question) => validateQuestion(question));
 };
 
-export const checkAnswer = (
-   question: IQuestion,
-   answers: string[] | number[]
-) => {
+export const checkAnswer = (question: IQuestion, answers: string[]) => {
    if (answers.length === 0) {
       return false;
    }
 
-   for (let i = 0; i < answers.length; i++) {
-      if (answers[i] !== question.rightAnswers[i]) {
-         return false;
-      }
-   }
+   const valid = answers.every((answer) =>
+      question.rightAnswers.includes(answer.trim())
+   );
 
-   return true;
+   return valid;
 };

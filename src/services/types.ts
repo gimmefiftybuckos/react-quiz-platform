@@ -1,7 +1,7 @@
 export interface IQuestion {
    id: number;
    answers: string[];
-   rightAnswers: number[] | string[];
+   rightAnswers: string[];
    problem: string;
    type: QuestionTypes;
    time?: number;
