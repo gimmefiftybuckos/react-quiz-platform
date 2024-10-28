@@ -5,11 +5,11 @@ import {
    Select,
    SelectChangeEvent,
 } from '@mui/material';
-import { useDispatch, useSelector } from '../../store';
-import { setType } from '../../store/slices/quizes';
-import { QuestionTypes } from '../../services/types';
+import { useDispatch, useSelector } from '../../../store';
+import { setType } from '../../../store/slices/quizes';
+import { QuestionTypes } from '../../../services/types';
 
-export const NewQuestionType = () => {
+export const Type = () => {
    const { question } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
 

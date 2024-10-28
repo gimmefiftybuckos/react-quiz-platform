@@ -6,7 +6,7 @@ interface InputQuestionProps {
    onChange: (selectedAnswers: string[]) => void;
 }
 
-const InputQuestion: React.FC<InputQuestionProps> = ({
+export const InputQuestion: React.FC<InputQuestionProps> = ({
    selectedAnswers,
    onChange,
 }) => {
@@ -23,6 +23,7 @@ const InputQuestion: React.FC<InputQuestionProps> = ({
          <FormLabel component='legend'>Введите ответы</FormLabel>
          <TextField
             label={`Ответ`}
+            autoComplete='off'
             value={selectedAnswers[0]}
             onChange={(event) => handleInputChange(event)}
             sx={{ marginBlockStart: 2 }}
@@ -30,5 +31,3 @@ const InputQuestion: React.FC<InputQuestionProps> = ({
       </FormControl>
    );
 };
-
-export default InputQuestion;

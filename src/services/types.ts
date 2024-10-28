@@ -5,11 +5,12 @@ export interface IQuestion {
    problem: string;
    type: QuestionTypes;
    time?: number;
-   valid?: boolean;
+   valid?: boolean | null;
 }
 
 export interface IQuize {
    id: string;
+   name: string;
    questions: IQuestion[];
 }
 

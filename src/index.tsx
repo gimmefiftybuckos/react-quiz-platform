@@ -3,12 +3,12 @@ import ReactDOM from 'react-dom/client';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 
 import App from './App.tsx';
-import { HomeSection } from './sections/HomeSection/index.tsx';
 import { CreateSection } from './sections/CreateSection/index.tsx';
 import { QuizSection } from './sections/QuizSection/index.tsx';
 
 import './styles/index.css';
 import store from './store/index.ts';
+import { CatalogSection } from './sections/CatalogSection/index.tsx';
 
 const router = createBrowserRouter([
    {
@@ -16,7 +16,7 @@ const router = createBrowserRouter([
       element: <App />,
       children: [
          {
-            element: <HomeSection />,
+            element: <CatalogSection />,
          },
          {
             path: 'create',

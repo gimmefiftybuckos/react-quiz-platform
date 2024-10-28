@@ -2,28 +2,41 @@ import { Box, Button, Grid, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
 import { useDispatch, useSelector } from '../../store';
-import { setQuestion } from '../../store/slices/quizes';
+import { setQuestionIndex, setValid } from '../../store/slices/quizes';
 import { validateQuestion } from '../../services/utils';
-import { useLocation } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { RoutesCatalog } from '../../services/types';
+import { NewQuestionName } from '../../feature/createQuiz/Name';
 
 export const AsideBar = () => {
-   const { quiz } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
+   const navigate = useNavigate();
    const { pathname } = useLocation();
+   const { quiz } = useSelector((state) => state.quizes);
 
-   const onClick = (id: number) => {
-      dispatch(setQuestion(id));
+   const handleChoose = (id: number) => {
+      dispatch(setQuestionIndex(id));
+   };
+
+   const handleEndQuiz = () => {
+      quiz.questions.forEach((_, index) => {
+         dispatch(
+            setValid({ quizId: quiz.id, questionId: index, status: false })
+         );
+      });
+      navigate(RoutesCatalog.HOME);
    };
 
    const inCreate = pathname === RoutesCatalog.CREATE;
-   const inQuiz = pathname === RoutesCatalog.QUIZ;
+   const inQuiz = pathname.includes(RoutesCatalog.QUIZ.split('/')[1]);
 
    return (
       <Box
          component='aside'
          sx={{
             display: 'flex',
+            flexDirection: 'column',
+            justifyContent: 'center',
             alignItems: 'center',
             maxInlineSize: '25vw',
             minInlineSize: 260,
@@ -66,7 +79,7 @@ export const AsideBar = () => {
                               border: '1px solid lightGray',
                               padding: 0.5,
                            }}
-                           onClick={() => onClick(item.id)}
+                           onClick={() => handleChoose(item.id)}
                         >
                            {inCreate &&
                               (validateQuestion(item) ? (
@@ -74,17 +87,28 @@ export const AsideBar = () => {
                               ) : (
                                  <ClearIcon color='error' />
                               ))}
+                           {inQuiz &&
+                              ((item.valid && <CheckIcon color='success' />) ||
+                                 (item.valid === false && (
+                                    <ClearIcon color='error' />
+                                 )))}
                         </IconButton>
                      </Grid>
                   ))}
                </Grid>
+
                {inQuiz && (
-                  <Button variant='outlined' sx={{ marginBlockStart: 3 }}>
+                  <Button
+                     onClick={handleEndQuiz}
+                     variant='outlined'
+                     sx={{ marginBlockStart: 3 }}
+                  >
                      Завершить
                   </Button>
                )}
             </Box>
          )}
+         {inCreate && <NewQuestionName />}
       </Box>
    );
 };

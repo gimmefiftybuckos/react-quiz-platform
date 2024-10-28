@@ -1,27 +1,25 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FormControl } from '@mui/material';
 import { useSelector } from '../../store';
-import CheckboxQuestion from '../CheckboxQuestion';
-import RadioQuestion from '../RadioQuestion';
-import InputQuestion from '../InputQuestion';
 import { QuestionTypes } from '../../services/types';
+import { CheckboxQuestion } from '../CheckboxQuestion';
+import { RadioQuestion } from '../RadioQuestion';
+import { InputQuestion } from '../InputQuestion';
 
 interface QuestionControlProps {
    type: QuestionTypes;
-   onChange: (selectedAnswers: number[] | string[]) => void;
+   selectedAnswers: string[];
+   onChange: (selectedAnswers: string[]) => void;
 }
 
 const QuestionControl: React.FC<QuestionControlProps> = ({
    type,
+   selectedAnswers,
    onChange,
 }) => {
    const { question } = useSelector((state) => state.quizes);
-   const [selectedAnswers, setSelectedAnswers] = useState<number[] | string[]>(
-      []
-   );
 
-   const handleChange = (newSelectedAnswers: number[] | string[]) => {
-      setSelectedAnswers(newSelectedAnswers);
+   const handleChange = (newSelectedAnswers: string[]) => {
       onChange(newSelectedAnswers);
    };
 
@@ -31,7 +29,7 @@ const QuestionControl: React.FC<QuestionControlProps> = ({
             return (
                <CheckboxQuestion
                   question={question}
-                  selectedAnswers={selectedAnswers as number[]}
+                  selectedAnswers={selectedAnswers}
                   onChange={handleChange}
                />
             );
@@ -39,14 +37,14 @@ const QuestionControl: React.FC<QuestionControlProps> = ({
             return (
                <RadioQuestion
                   question={question}
-                  selectedAnswers={selectedAnswers as number[]}
+                  selectedAnswers={selectedAnswers}
                   onChange={handleChange}
                />
             );
          case 'input':
             return (
                <InputQuestion
-                  selectedAnswers={selectedAnswers as string[]}
+                  selectedAnswers={selectedAnswers}
                   onChange={handleChange}
                />
             );

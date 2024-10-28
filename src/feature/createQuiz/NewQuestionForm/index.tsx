@@ -1,22 +1,21 @@
 import { Box, Button } from '@mui/material';
-import { NewQuestionTitle } from '../NewQuestionTitle';
-import { NewQuestionType } from '../NewQuestionType';
-import { NewQuestionAnswers } from '../NewQuestionAnswers';
 import {
    addQuestion,
    addQuize,
    resetQuestion,
    resetQuiz,
    setAnswers,
-   setValid,
-} from '../../store/slices/quizes';
-import { useDispatch, useSelector } from '../../store';
+} from '../../../store/slices/quizes';
+import { useDispatch, useSelector } from '../../../store';
 import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { validateQuestion, validateQuiz } from '../../services/utils';
+import { validateQuiz } from '../../../services/utils';
+import { Title } from '../Title';
+import { Type } from '../Type';
+import { Answers } from '../Answers';
 
 export const NewQuestionForm = () => {
-   const { question, quiz, quizes } = useSelector((state) => state.quizes);
+   const { question, quiz } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
    const navigate = useNavigate();
 
@@ -66,11 +65,11 @@ export const NewQuestionForm = () => {
                paddingBlock: 1,
             }}
          >
-            <NewQuestionTitle />
-            <NewQuestionType />
+            <Title />
+            <Type />
          </Box>
 
-         <NewQuestionAnswers />
+         <Answers />
          <Box
             component='div'
             sx={{

@@ -1,17 +1,18 @@
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { IQuestion, IQuize, QuestionTypes } from '../../services/types';
 import { v4 as uuidv4 } from 'uuid';
-import { original } from 'immer';
 
 type TQuizSlice = {
    quiz: IQuize;
    question: IQuestion;
+   questionIndex: number;
    quizes: IQuize[];
 };
 
 const initialState: TQuizSlice = {
    quiz: {
       id: uuidv4(),
+      name: '',
       questions: [],
    },
    question: {
@@ -20,11 +21,13 @@ const initialState: TQuizSlice = {
       rightAnswers: [],
       problem: '',
       type: QuestionTypes.NONE,
-      valid: false,
+      valid: null,
    },
+   questionIndex: 0,
    quizes: [
       {
          id: '1',
+         name: 'Test #1',
          questions: [
             {
                id: 0,
@@ -32,36 +35,45 @@ const initialState: TQuizSlice = {
                rightAnswers: ['Paris'],
                problem: 'What is the capital of France?',
                type: QuestionTypes.INPUT,
-               valid: false,
+               valid: null,
             },
             {
                id: 1,
                answers: ['Dog', 'Cat', 'Elephant', 'Lion'],
-               rightAnswers: [1],
+               rightAnswers: ['Cat'],
                problem: 'Which animal is known as the "King of the Jungle"?',
                type: QuestionTypes.CHECKBOX,
-               valid: false,
+               valid: null,
+            },
+            {
+               id: 2,
+               answers: ['Dog', 'Cat', 'Elephant', 'Lion'],
+               rightAnswers: ['Cat'],
+               problem: 'Which animal is known as the "King of the Jungle"?',
+               type: QuestionTypes.CHECKBOX,
+               valid: null,
             },
          ],
       },
       {
          id: '2',
+         name: 'Test #2',
          questions: [
             {
                id: 0,
                answers: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-               rightAnswers: [2],
+               rightAnswers: ['Jupiter'],
                problem: 'Which planet is known as the "Red Planet"?',
                type: QuestionTypes.CHECKBOX,
-               valid: false,
+               valid: null,
             },
             {
                id: 1,
                answers: ['Mount Everest', 'K2', 'Kangchenjunga', 'Lhotse'],
-               rightAnswers: [0],
-               problem: 'What is the highest mountain in the world?',
+               rightAnswers: ['Mount Everest', 'K2'],
+               problem: 'What is two the highest mountain in the world?',
                type: QuestionTypes.CHECKBOX,
-               valid: false,
+               valid: null,
             },
          ],
       },
@@ -72,6 +84,9 @@ const quizes = createSlice({
    name: 'quizes',
    initialState,
    reducers: {
+      setQuestionIndex(state, action) {
+         state.questionIndex = action.payload;
+      },
       setType(state, action) {
          state.question.type = action.payload;
       },
@@ -84,8 +99,36 @@ const quizes = createSlice({
       setProblem(state, action) {
          state.question.problem = action.payload;
       },
-      setValid(state, action) {
-         state.question.valid = action.payload;
+
+      setValid(
+         state,
+         action: PayloadAction<{
+            quizId: string;
+            questionId: number;
+            status: boolean;
+         }>
+      ) {
+         const { quizId, questionId, status } = action.payload;
+
+         const quizIndex = state.quizes.findIndex((quiz) => quiz.id === quizId);
+         if (quizIndex < 0) {
+            return;
+         }
+
+         const questionIndex = state.quiz.questions.findIndex(
+            (question) => question.id === questionId
+         );
+         if (questionIndex < 0) {
+            return;
+         }
+
+         if (
+            typeof state.quizes[quizIndex].questions[questionIndex].valid !==
+            'boolean'
+         ) {
+            state.quiz.questions[questionIndex].valid = status;
+            state.quizes[quizIndex].questions[questionIndex].valid = status;
+         }
       },
 
       addQuestion(state) {
@@ -102,6 +145,9 @@ const quizes = createSlice({
       addQuize(state) {
          state.quizes.push(state.quiz);
       },
+      setQuizName(state, action) {
+         state.quiz.name = action.payload;
+      },
 
       setQuestion(state, action) {
          const question = state.quiz.questions.find(
@@ -113,11 +159,7 @@ const quizes = createSlice({
          }
       },
       setQuiz(state, action) {
-         // const quiz = state.quizes.find((item) => action.payload === item.id);
-
-         const quiz = original(
-            state.quizes.find((item) => action.payload === item.id)
-         );
+         const quiz = state.quizes.find((item) => action.payload === item.id);
 
          if (quiz) {
             state.quiz = quiz;
@@ -131,13 +173,23 @@ const quizes = createSlice({
          };
       },
       resetQuiz(state) {
-         state.quiz = { id: uuidv4(), questions: initialState.quiz.questions };
+         state.quiz = {
+            id: uuidv4(),
+            name: '',
+            questions: [],
+         };
          state.question = { ...initialState.question, id: 0 };
+      },
+
+      setQuizes(state, action: PayloadAction<IQuize[]>) {
+         state.quizes = action.payload;
       },
    },
 });
 
 export const {
+   setQuizName,
+   setQuestionIndex,
    addQuestion,
    setAnswers,
    setProblem,
@@ -149,6 +201,7 @@ export const {
    setQuiz,
    addQuize,
    resetQuiz,
+   setQuizes,
 } = quizes.actions;
 
 export default quizes.reducer;

@@ -48,7 +48,7 @@ export const CatalogSection = () => {
                         }}
                      >
                         <Typography variant='h5' component='h2'>
-                           {item.id}
+                           {item.name}
                         </Typography>
                         <Typography variant='body1' component='p'>
                            Колличество вопросов: {item.questions.length}

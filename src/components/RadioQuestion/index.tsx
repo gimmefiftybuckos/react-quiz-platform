@@ -13,35 +13,31 @@ interface RadioQuestionProps {
    question: {
       answers: string[];
    };
-   selectedAnswers: number[];
-   onChange: (selectedAnswers: number[]) => void;
+   selectedAnswers: string[];
+   onChange: (selectedAnswers: string[]) => void;
 }
 
-const RadioQuestion: React.FC<RadioQuestionProps> = ({
+export const RadioQuestion: React.FC<RadioQuestionProps> = ({
    question,
    selectedAnswers,
    onChange,
 }) => {
    const handleRadioChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-      const selectedIndex = parseInt(event.target.value, 10);
-      onChange([selectedIndex]);
+      const selectedText = event.target.value;
+      onChange([selectedText]);
    };
 
    return (
       <FormControl component='fieldset'>
          <FormLabel component='legend'>Выберите один вариант ответа</FormLabel>
          <RadioGroup
-            value={
-               selectedAnswers[0] !== undefined
-                  ? selectedAnswers[0].toString()
-                  : ''
-            }
+            value={selectedAnswers[0] || ''}
             onChange={handleRadioChange}
          >
             {question.answers.map((item, index) => (
                <FormControlLabel
                   key={index}
-                  value={index.toString()}
+                  value={item}
                   control={<Radio />}
                   label={
                      <Box sx={{ display: 'flex', gap: 1 }}>
@@ -57,5 +53,3 @@ const RadioQuestion: React.FC<RadioQuestionProps> = ({
       </FormControl>
    );
 };
-
-export default RadioQuestion;

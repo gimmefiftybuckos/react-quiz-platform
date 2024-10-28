@@ -12,21 +12,21 @@ interface CheckboxQuestionProps {
    question: {
       answers: string[];
    };
-   selectedAnswers: number[];
-   onChange: (selectedAnswers: number[]) => void;
+   selectedAnswers: string[];
+   onChange: (selectedAnswers: string[]) => void;
 }
 
-const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
+export const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
    question,
    selectedAnswers,
    onChange,
 }) => {
-   const handleCheckboxChange = (index: number) => {
+   const handleCheckboxChange = (answerText: string) => {
       const newSelectedAnswers = [...selectedAnswers];
-      if (newSelectedAnswers.includes(index)) {
-         newSelectedAnswers.splice(newSelectedAnswers.indexOf(index), 1);
+      if (newSelectedAnswers.includes(answerText)) {
+         newSelectedAnswers.splice(newSelectedAnswers.indexOf(answerText), 1);
       } else {
-         newSelectedAnswers.push(index);
+         newSelectedAnswers.push(answerText);
       }
       onChange(newSelectedAnswers);
    };
@@ -41,8 +41,9 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
                key={index}
                control={
                   <Checkbox
-                     checked={selectedAnswers.includes(index)}
-                     onChange={() => handleCheckboxChange(index)}
+                     value={item}
+                     checked={selectedAnswers.includes(item)}
+                     onChange={() => handleCheckboxChange(item)}
                   />
                }
                label={
@@ -58,5 +59,3 @@ const CheckboxQuestion: React.FC<CheckboxQuestionProps> = ({
       </FormControl>
    );
 };
-
-export default CheckboxQuestion;

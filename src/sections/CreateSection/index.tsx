@@ -1,8 +1,8 @@
 import { Box } from '@mui/material';
-import { NewQuestionForm } from '../../components/NewQuestionForm';
 import { useEffect } from 'react';
 import { useDispatch } from '../../store';
-import { resetQuestion, resetQuiz } from '../../store/slices/quizes';
+import { resetQuiz } from '../../store/slices/quizes';
+import { NewQuestionForm } from '../../feature/createQuiz/NewQuestionForm';
 
 export const CreateSection = () => {
    const dispatch = useDispatch();

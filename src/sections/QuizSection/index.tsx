@@ -1,8 +1,8 @@
-import { Box, Button, Typography } from '@mui/material';
+import { Box } from '@mui/material';
 import { QuizForm } from '../../components/QuizForm';
-import { useDispatch, useSelector } from '../../store';
-import { useEffect, useState } from 'react';
-import { resetQuestion, resetQuiz } from '../../store/slices/quizes';
+import { useDispatch } from '../../store';
+import { useEffect } from 'react';
+import { resetQuiz } from '../../store/slices/quizes';
 
 export const QuizSection = () => {
    const dispatch = useDispatch();

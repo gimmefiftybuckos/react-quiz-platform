@@ -3,10 +3,10 @@ import ClearIcon from '@mui/icons-material/Clear';
 import AddIcon from '@mui/icons-material/Add';
 import CheckIcon from '@mui/icons-material/Check';
 
-import { useDispatch, useSelector } from '../../store';
-import { setAnswers, setRightAnswer } from '../../store/slices/quizes';
+import { useDispatch, useSelector } from '../../../store';
+import { setAnswers, setRightAnswer } from '../../../store/slices/quizes';
 
-export const NewQuestionAnswers = () => {
+export const Answers = () => {
    const { question } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
 
@@ -23,10 +23,10 @@ export const NewQuestionAnswers = () => {
       dispatch(setAnswers(newAnswers));
    };
 
-   const setRightAnswers = (index: number) => {
-      const newRightAnswers = rightAnswers.includes(index)
-         ? rightAnswers.filter((item) => item !== index)
-         : [...rightAnswers, index];
+   const setRightAnswers = (answer: string) => {
+      const newRightAnswers = rightAnswers.includes(answer)
+         ? rightAnswers.filter((item) => item !== answer)
+         : [...rightAnswers, answer];
 
       dispatch(setRightAnswer(newRightAnswers));
    };
@@ -46,7 +46,7 @@ export const NewQuestionAnswers = () => {
          }}
       >
          {answers.map((answer, index) => {
-            const isRight = rightAnswers.includes(index);
+            const isRight = rightAnswers.includes(answer);
 
             return (
                <Box
@@ -73,7 +73,7 @@ export const NewQuestionAnswers = () => {
                   </IconButton>
                   <IconButton
                      sx={{ padding: 0, blockSize: 40, inlineSize: 40 }}
-                     onClick={() => setRightAnswers(index)}
+                     onClick={() => setRightAnswers(answer)}
                   >
                      {isRight ? <CheckIcon color='success' /> : <AddIcon />}
                   </IconButton>
