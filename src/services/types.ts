@@ -11,6 +11,7 @@ export interface IQuestion {
 export interface IQuize {
    id: string;
    name: string;
+   time?: string;
    questions: IQuestion[];
 }
 

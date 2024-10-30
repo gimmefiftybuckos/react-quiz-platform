@@ -1,4 +1,5 @@
 import { Box } from '@mui/material';
+
 import { NavigationBar } from '../../components/NavigationBar';
 
 export const Header = () => {
@@ -13,7 +14,7 @@ export const Header = () => {
             boxShadow: '0 4px 5px rgba(0, 0, 0, 0.1)',
          }}
       >
-         <NavigationBar></NavigationBar>
+         <NavigationBar />
       </Box>
    );
 };

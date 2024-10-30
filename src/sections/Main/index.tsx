@@ -1,9 +1,11 @@
+import { Route, Routes } from 'react-router-dom';
 import { Box } from '@mui/material';
+
+import { RoutesCatalog } from '../../services/types';
+
 import { AsideBar } from '../AsideBar';
 import { QuizSection } from '../QuizSection';
-import { Route, Routes } from 'react-router-dom';
 import { CreateSection } from '../CreateSection';
-import { RoutesCatalog } from '../../services/types';
 import { CatalogSection } from '../CatalogSection';
 
 export const Main = () => {

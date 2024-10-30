@@ -1,7 +1,8 @@
+import { useNavigate } from 'react-router-dom';
 import { Box, Button, Typography } from '@mui/material';
 import { useDispatch, useSelector } from '../../store';
+
 import { setQuiz } from '../../store/slices/quizes';
-import { useNavigate } from 'react-router-dom';
 
 export const CatalogSection = () => {
    const { quizes } = useSelector((state) => state.quizes);
@@ -23,6 +24,7 @@ export const CatalogSection = () => {
             inlineSize: '100%',
             background: '#fff',
             borderInlineEnd: '1px solid lightGray',
+            overflow: 'auto',
          }}
       >
          <Typography component='h1' variant='h5'>

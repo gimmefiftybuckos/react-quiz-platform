@@ -1,6 +1,7 @@
-import { Box } from '@mui/material';
 import { useEffect } from 'react';
+import { Box } from '@mui/material';
 import { useDispatch } from '../../store';
+
 import { resetQuiz } from '../../store/slices/quizes';
 import { NewQuestionForm } from '../../feature/createQuiz/NewQuestionForm';
 

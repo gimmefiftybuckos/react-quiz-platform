@@ -1,12 +1,14 @@
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from '../../store';
 import { Box, Button, Grid, IconButton } from '@mui/material';
 import CheckIcon from '@mui/icons-material/Check';
 import ClearIcon from '@mui/icons-material/Clear';
-import { useDispatch, useSelector } from '../../store';
+
+import { RoutesCatalog } from '../../services/types';
 import { setQuestionIndex, setValid } from '../../store/slices/quizes';
 import { validateQuestion } from '../../services/utils';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { RoutesCatalog } from '../../services/types';
-import { NewQuestionName } from '../../feature/createQuiz/Name';
+
+import { Name } from '../../feature/createQuiz/Name';
 
 export const AsideBar = () => {
    const dispatch = useDispatch();
@@ -69,32 +71,36 @@ export const AsideBar = () => {
                   container
                   spacing={1}
                >
-                  {quiz.questions.map((item) => (
-                     <Grid key={item.id} item sx={{ padding: 0 }}>
-                        <IconButton
-                           sx={{
-                              blockSize: 40,
-                              inlineSize: 30,
-                              borderRadius: 1,
-                              border: '1px solid lightGray',
-                              padding: 0.5,
-                           }}
-                           onClick={() => handleChoose(item.id)}
-                        >
-                           {inCreate &&
-                              (validateQuestion(item) ? (
-                                 <CheckIcon color='success' />
-                              ) : (
-                                 <ClearIcon color='error' />
-                              ))}
-                           {inQuiz &&
-                              ((item.valid && <CheckIcon color='success' />) ||
-                                 (item.valid === false && (
+                  {quiz.questions.map((item) => {
+                     return (
+                        <Grid key={item.id} item sx={{ padding: 0 }}>
+                           <IconButton
+                              sx={{
+                                 blockSize: 40,
+                                 inlineSize: 30,
+                                 borderRadius: 1,
+                                 border: '1px solid lightGray',
+                                 padding: 0.5,
+                              }}
+                              onClick={() => handleChoose(item.id)}
+                           >
+                              {inCreate &&
+                                 (validateQuestion(item) ? (
+                                    <CheckIcon color='success' />
+                                 ) : (
                                     <ClearIcon color='error' />
-                                 )))}
-                        </IconButton>
-                     </Grid>
-                  ))}
+                                 ))}
+                              {inQuiz &&
+                                 ((item.valid && (
+                                    <CheckIcon color='success' />
+                                 )) ||
+                                    (item.valid === false && (
+                                       <ClearIcon color='error' />
+                                    )))}
+                           </IconButton>
+                        </Grid>
+                     );
+                  })}
                </Grid>
 
                {inQuiz && (
@@ -108,7 +114,18 @@ export const AsideBar = () => {
                )}
             </Box>
          )}
-         {inCreate && <NewQuestionName />}
+
+         {inCreate && (
+            <Box
+               sx={{
+                  minInlineSize: 220,
+                  maxInlineSize: '18vw',
+               }}
+            >
+               <Name />
+               {/* <Time /> */}
+            </Box>
+         )}
       </Box>
    );
 };

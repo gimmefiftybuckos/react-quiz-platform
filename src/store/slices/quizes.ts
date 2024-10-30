@@ -9,10 +9,15 @@ type TQuizSlice = {
    quizes: IQuize[];
 };
 
+/*
+   TODO: split into different slices !
+*/
+
 const initialState: TQuizSlice = {
    quiz: {
       id: uuidv4(),
       name: '',
+      time: '',
       questions: [],
    },
    question: {
@@ -24,60 +29,7 @@ const initialState: TQuizSlice = {
       valid: null,
    },
    questionIndex: 0,
-   quizes: [
-      {
-         id: '1',
-         name: 'Test #1',
-         questions: [
-            {
-               id: 0,
-               answers: ['Paris'],
-               rightAnswers: ['Paris'],
-               problem: 'What is the capital of France?',
-               type: QuestionTypes.INPUT,
-               valid: null,
-            },
-            {
-               id: 1,
-               answers: ['Dog', 'Cat', 'Elephant', 'Lion'],
-               rightAnswers: ['Cat'],
-               problem: 'Which animal is known as the "King of the Jungle"?',
-               type: QuestionTypes.CHECKBOX,
-               valid: null,
-            },
-            {
-               id: 2,
-               answers: ['Dog', 'Cat', 'Elephant', 'Lion'],
-               rightAnswers: ['Cat'],
-               problem: 'Which animal is known as the "King of the Jungle"?',
-               type: QuestionTypes.CHECKBOX,
-               valid: null,
-            },
-         ],
-      },
-      {
-         id: '2',
-         name: 'Test #2',
-         questions: [
-            {
-               id: 0,
-               answers: ['Mars', 'Venus', 'Jupiter', 'Saturn'],
-               rightAnswers: ['Jupiter'],
-               problem: 'Which planet is known as the "Red Planet"?',
-               type: QuestionTypes.CHECKBOX,
-               valid: null,
-            },
-            {
-               id: 1,
-               answers: ['Mount Everest', 'K2', 'Kangchenjunga', 'Lhotse'],
-               rightAnswers: ['Mount Everest', 'K2'],
-               problem: 'What is two the highest mountain in the world?',
-               type: QuestionTypes.CHECKBOX,
-               valid: null,
-            },
-         ],
-      },
-   ],
+   quizes: [],
 };
 
 const quizes = createSlice({
@@ -148,6 +100,9 @@ const quizes = createSlice({
       setQuizName(state, action) {
          state.quiz.name = action.payload;
       },
+      setQuizTime(state, action: PayloadAction<string>) {
+         state.quiz.time = action.payload;
+      },
 
       setQuestion(state, action) {
          const question = state.quiz.questions.find(
@@ -202,6 +157,7 @@ export const {
    addQuize,
    resetQuiz,
    setQuizes,
+   setQuizTime,
 } = quizes.actions;
 
 export default quizes.reducer;

@@ -1,8 +1,9 @@
 import { Box, TextField } from '@mui/material';
 import { useDispatch, useSelector } from '../../../store';
+
 import { setQuizName } from '../../../store/slices/quizes';
 
-export const NewQuestionName = () => {
+export const Name = () => {
    const { quiz } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
 
@@ -16,7 +17,6 @@ export const NewQuestionName = () => {
             display: 'flex',
             marginBlockStart: 4,
             paddingBlock: 1,
-            maxInlineSize: '19vw',
             inlineSize: '100%',
          }}
       >

@@ -1,7 +1,10 @@
 import React from 'react';
 import { FormControl } from '@mui/material';
+
 import { useSelector } from '../../store';
 import { QuestionTypes } from '../../services/types';
+import { useLoadData } from '../../hooks/useLoadData';
+
 import { CheckboxQuestion } from '../CheckboxQuestion';
 import { RadioQuestion } from '../RadioQuestion';
 import { InputQuestion } from '../InputQuestion';
@@ -12,12 +15,14 @@ interface QuestionControlProps {
    onChange: (selectedAnswers: string[]) => void;
 }
 
-const QuestionControl: React.FC<QuestionControlProps> = ({
+export const QuestionControl: React.FC<QuestionControlProps> = ({
    type,
    selectedAnswers,
    onChange,
 }) => {
    const { question } = useSelector((state) => state.quizes);
+
+   useLoadData();
 
    const handleChange = (newSelectedAnswers: string[]) => {
       onChange(newSelectedAnswers);
@@ -66,5 +71,3 @@ const QuestionControl: React.FC<QuestionControlProps> = ({
       </FormControl>
    );
 };
-
-export default QuestionControl;

@@ -24,7 +24,7 @@ export const InputQuestion: React.FC<InputQuestionProps> = ({
          <TextField
             label={`Ответ`}
             autoComplete='off'
-            value={selectedAnswers[0]}
+            value={selectedAnswers[0] || ''}
             onChange={(event) => handleInputChange(event)}
             sx={{ marginBlockStart: 2 }}
          />

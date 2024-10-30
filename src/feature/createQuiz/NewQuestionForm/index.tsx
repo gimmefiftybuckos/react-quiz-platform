@@ -1,4 +1,8 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Box, Button } from '@mui/material';
+import { useDispatch, useSelector } from '../../../store';
+
 import {
    addQuestion,
    addQuize,
@@ -6,10 +10,8 @@ import {
    resetQuiz,
    setAnswers,
 } from '../../../store/slices/quizes';
-import { useDispatch, useSelector } from '../../../store';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { validateQuiz } from '../../../services/utils';
+
 import { Title } from '../Title';
 import { Type } from '../Type';
 import { Answers } from '../Answers';
@@ -18,6 +20,10 @@ export const NewQuestionForm = () => {
    const { question, quiz } = useSelector((state) => state.quizes);
    const dispatch = useDispatch();
    const navigate = useNavigate();
+
+   const handleNewQusetion = () => {
+      dispatch(resetQuestion());
+   };
 
    const addAnswer = () => {
       dispatch(setAnswers([...question.answers, '']));
@@ -34,10 +40,6 @@ export const NewQuestionForm = () => {
       } else {
          console.error('Не все вопросы составлены правильно');
       }
-   };
-
-   const onClick = () => {
-      dispatch(resetQuestion());
    };
 
    useEffect(() => {
@@ -88,7 +90,7 @@ export const NewQuestionForm = () => {
             <Button
                sx={{ marginBlock: 4 }}
                variant='contained'
-               onClick={onClick}
+               onClick={handleNewQusetion}
             >
                Новый вопрос
             </Button>

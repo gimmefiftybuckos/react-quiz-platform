@@ -6,8 +6,9 @@ import {
    SelectChangeEvent,
 } from '@mui/material';
 import { useDispatch, useSelector } from '../../../store';
-import { setType } from '../../../store/slices/quizes';
+
 import { QuestionTypes } from '../../../services/types';
+import { setType } from '../../../store/slices/quizes';
 
 export const Type = () => {
    const { question } = useSelector((state) => state.quizes);
@@ -35,9 +36,9 @@ export const Type = () => {
                Выбор нескольких вариантов
             </MenuItem>
             <MenuItem value={QuestionTypes.INPUT}>Короткий ответ</MenuItem>
-            <MenuItem value={QuestionTypes.TEXTFIELD}>
+            {/* <MenuItem value={QuestionTypes.TEXTFIELD}>
                Развернутый ответ
-            </MenuItem>
+            </MenuItem> */}
          </Select>
       </FormControl>
    );

@@ -1,8 +1,9 @@
-import { Box, Button, Typography } from '@mui/material';
-import QuestionControl from '../QuestionControl';
 import { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from '../../store';
 import { useLocation, useSearchParams } from 'react-router-dom';
+import { Box, Button, Typography } from '@mui/material';
+
+import { useDispatch, useSelector } from '../../store';
+
 import {
    setQuestion,
    setQuestionIndex,
@@ -11,14 +12,17 @@ import {
 } from '../../store/slices/quizes';
 import { checkAnswer } from '../../services/utils';
 
+import { QuestionControl } from '../QuestionControl';
+
 export const QuizForm = () => {
    const dispatch = useDispatch();
    const { pathname } = useLocation();
+
    const [params, setParams] = useSearchParams();
+   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
    const { quiz, question, questionIndex } = useSelector(
       (state) => state.quizes
    );
-   const [selectedAnswers, setSelectedAnswers] = useState<string[]>([]);
 
    const quizId = pathname.split('/')[2];
    const questionIndexParam = params.get('question');
@@ -81,6 +85,7 @@ export const QuizForm = () => {
                variant='outlined'
                type='submit'
                sx={{ marginBlockStart: 3 }}
+               disabled={typeof question.valid === 'boolean'}
             >
                Ответить
             </Button>
